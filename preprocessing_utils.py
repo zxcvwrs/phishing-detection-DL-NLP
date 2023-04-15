@@ -4,7 +4,8 @@ import os
 import re
 import cleantext
 import pandas as pd
-
+    
+from nltk.corpus import stopwords
 from bs4 import BeautifulSoup, NavigableString
 from functools import wraps
 from collections import defaultdict
@@ -95,3 +96,42 @@ def extract_message_header(mbox_msg, values_to_extract):
         extracted_val = mbox_msg.get(value_to_extract)
         temp_dict[value_to_extract] = extracted_val
     return temp_dict    
+
+def extract_from_html(body):
+    try:
+        soup = BeautifulSoup(body, 'html.parser')
+        for tag in soup.find_all(True):
+            if tag.has_attr('href'):
+                tag.insert_before(NavigableString(' '))
+                tag.replace_with(tag['href'])
+            elif tag.has_attr('src'):
+                tag.insert_before(NavigableString(' '))
+                tag.replace_with(tag['src'])
+            elif tag.has_attr('data'):
+                tag.insert_before(NavigableString(' '))
+                tag.replace_with(tag['data'])
+        text = soup.get_text()
+        return text
+    except Exception as e:
+        print(f'Exception occured at: {e} with {body}')
+        return "to_manual_extraction"
+
+def tokenize(body, stopwords=stopwords):
+    body = body.split(" ")
+    body = [token for token in body if not token in stopwords.words('english')]
+    return body
+
+def preprocess_body(body):
+    body = body.lower()
+    body = extract_from_html(body)
+    if body == 'to_manual_extraction':
+        return body
+    try:
+        body = cleantext.replace_urls(body, replace_with="fixedstringurl")
+        body = re.sub(r'\S+@\S+', 'fixedstringemails', body)
+        body = re.sub(r"[^a-zA-Z0-9\s]", '', body) 
+        body = " ".join(body.split())
+    except Exception as e:
+        print(f'Exception occured at: {e} with {body}')
+        return 'to_manual_extraction'
+    return body    
