@@ -1,0 +1,24 @@
+{
+    "manifest_version": 3,
+    "name": "PhishMan extension",
+    "description": "This is PhishMan extension.",
+    "version": "1.0",
+    "action": {
+      "default_popup": "templates/authenticate .html"
+    },
+    "permissions": [
+        "identity",
+        "storage"
+      ],
+    "oauth2": {
+        "client_id": "379055983497-t8jlv1iitap07tm9htkc8vo6cs40nh5t.apps.googleusercontent.com",
+        "scopes": ["https://www.googleapis.com/auth/gmail.readonly"]
+      },
+    "content_scripts" : [
+        {
+            "matches": ["https://mail.google.com/*"],
+            "js": ["/scripts/email_id_fetch.js"],
+            "run_at": "document_end"
+        }
+    ]
+  }
