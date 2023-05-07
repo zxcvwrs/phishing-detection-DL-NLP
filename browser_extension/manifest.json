@@ -4,7 +4,7 @@
     "description": "This is PhishMan extension.",
     "version": "1.0",
     "action": {
-      "default_popup": "templates/authenticate .html"
+      "default_popup": "/templates/authenticate.html"
     },
     "permissions": [
         "identity",
