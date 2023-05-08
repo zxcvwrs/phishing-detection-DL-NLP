@@ -15,11 +15,14 @@ const observer = new MutationObserver((mutationsList) => {
             prevEmailId = emailId;
             isEmailOpen = true;
             console.log('Email opened', emailId);
+            chrome.runtime.sendMessage({action: 'emailOpened', emailId: emailId});
+            console.log('Msg opened send');
         } 
     } else if (emailElement == null && isEmailOpen == true) {
         console.log('Email closed')
         isEmailOpen = false;
-
+        chrome.runtime.sendMessage({action: 'emailClosed'});
+        console.log('Msg closed send');
     }
     }
   }
