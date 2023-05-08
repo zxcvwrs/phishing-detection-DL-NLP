@@ -3,7 +3,7 @@ window.onload = function() {
       .then(token => {
           console.log('Token', token)
           if (token) {
-              redirectToDetectionPage();
+              redirectToWelcomePage();
               console.log('Token is already saved. This would be redirection.');
           } else {
             getAndSetAuthToken();
@@ -14,8 +14,8 @@ window.onload = function() {
       });
 };
 
-function redirectToDetectionPage() {
-  window.location.href = "detection.html";
+function redirectToWelcomePage() {
+  window.location.href = "welcome.html";
 }
 
 function checkAuthToken() {
@@ -36,7 +36,7 @@ function getAndSetAuthToken() {
       if (token) {
           setAuthToken(token)
               .then(() => {
-                  redirectToDetectionPage();
+                  redirectToWelcomePage();
                   console.log('Token stored', token);
               })
               .catch(error => {
