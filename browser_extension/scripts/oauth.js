@@ -3,7 +3,7 @@ window.onload = function() {
       .then(token => {
           console.log('Token', token)
           if (token) {
-              // redirectToWelcomePage();
+              redirectToWelcomePage();
               console.log('Token is already saved. This would be redirection.');
           } else {
             getAndSetAuthToken();
@@ -15,7 +15,7 @@ window.onload = function() {
               window.location.href = '/templates/detection_main.html';
               console.log('redirected to detection_main')
             } else if (response.status === 'emailClosed') {
-              window.location.href = '/templates/authenticate.html';
+              window.location.href = '/templates/welcome.html';
               console.log('redirected to authenticate')
             }
           });
@@ -48,7 +48,7 @@ function getAndSetAuthToken() {
       if (token) {
           setAuthToken(token)
               .then(() => {
-                  // redirectToWelcomePage();
+                  redirectToWelcomePage();
                   console.log('Token stored', token);
               })
               .catch(error => {
