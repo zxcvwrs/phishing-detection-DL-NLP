@@ -7,17 +7,17 @@ let isListenerActive = false;
 
 if (!isListenerActive) {
   chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-    console.log("listener initialized")
+    console.log("background.js: listener active")
     if (message.action === 'emailOpened') {
       // window.location.href = '/templates/detection_main.html';
-      console.log('email opened redirector')
+      console.log('background.js: emailOpened received from content_script.js')
       emailStatus = 'emailOpened';
     } else if (message.action === 'emailClosed') {
       // window.location.href = '/templates/authenticate.html';
-      console.log('email closed redirector')
+      console.log('background.js: emailClosed received from content_script.js')
       emailStatus = 'emailClosed'
     } else if (message.action === 'getEmailStatus' ) {
-      console.log("get email status", emailStatus)
+      console.log("background.js: getEmailStatus received from popup.js, sending response to popup.js", emailStatus)
       sendResponse({ status: emailStatus });
     }
   });
