@@ -25,7 +25,9 @@ const observer = new MutationObserver((mutationsList) => {
         console.log('content_script.js: emailClosed send to background.js');
     }
     }
+    
   }
 });
+
 
 observer.observe(targetNode, config);
