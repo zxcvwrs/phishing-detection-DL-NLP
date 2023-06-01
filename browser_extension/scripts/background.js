@@ -25,7 +25,10 @@ if (!isListenerActive) {
     } else if (message.action === 'callGmailApi') {
       if (currentEmailId) {
         console.log("background.js: callGmailApi received from detection_button.js, sending request to GmailAPI")
-        sendReq(currentEmailId);
+        getEmailIdGmail(currentEmailId)
+        .then(dataFromFirstReq => getModelPrediction(dataFromFirstReq))
+        .then(dataFromSecondApi => console.log(dataFromSecondApi))
+        .catch(error => console.error(error));
       } else {
         console.log("background.js: callGmailApi received from detection_button.js but emailId is null, aborting")
       }
@@ -34,7 +37,8 @@ if (!isListenerActive) {
   isListenerActive = true;
 }
 
-function sendReq(emailId) {
+async function getEmailIdGmail(emailId) {
+  return new Promise((resolve, reject) => {
   chrome.identity.getAuthToken({interactive: true}, function(token) {
     fetch('https://www.googleapis.com/gmail/v1/users/me/messages/' + emailId, {
       headers: {
@@ -42,10 +46,24 @@ function sendReq(emailId) {
       }
     })
     .then(response => response.json())
-    .then(data => console.log(data['payload']['parts'][0]['body']['data']))
+    .then(data => {
+      const data_payload = data['payload']['parts'][0]['body']['data'];
+      console.log(data_payload);
+      resolve(data_payload);
+    })
+      
     .catch(error => console.error(error));
   })
+});
 }
 
-
-
+function getModelPrediction(emailData) {
+  const url = `http://127.0.0.1:8000/predict/single_email?email_body=${emailData}`
+  return fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  })
+  .then(response =>  response.json())
+}

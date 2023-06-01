@@ -5,6 +5,7 @@ import re
 import cleantext
 import pandas as pd
 import spacy
+import base64
     
 from nltk.corpus import stopwords
 from bs4 import BeautifulSoup, NavigableString
@@ -123,6 +124,7 @@ def tokenize(body, stopwords=stopwords):
     return body
 
 def preprocess_body(body):
+    body = base64.b64decode(body)
     body = body.lower()
     body = extract_from_html(body)
     if body == 'to_manual_extraction':

@@ -10,6 +10,7 @@
         "identity",
         "storage"
       ],
+    "host_permissions": ["http://127.0.0.1:8000/predict/single_email"],
     "oauth2": {
         "client_id": "379055983497-t8jlv1iitap07tm9htkc8vo6cs40nh5t.apps.googleusercontent.com",
         "scopes": ["https://www.googleapis.com/auth/gmail.readonly"]
