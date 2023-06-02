@@ -1,17 +1,44 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <style>
-      body {
-        width: 300px;
-        font-family: Arial, sans-serif;
-      }
-    </style>
+<html lang="en">
 
-  </head>
-  <body>
-    <p>Email opened! Please click on the detection button </p>
-    <button id="myButton">Start detection</button>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>browser-extension</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/Banner-Heading-Image.css">
+    <link rel="stylesheet" href="assets/css/Footer-Basic.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
     <script src="/scripts/detection_button.js"></script>
-  </body>
+</head>
+
+<body style="height: 200px;min-height: 50px;width: 300px;">
+    <section class="py-4 py-xl-5">
+        <div class="container">
+            <div class="text-center p-4 p-lg-5" style="margin: 0px;padding: 0px;">
+                <p class="fw-bold text-primary mb-2" style="padding: 0px;margin: -29px;">PhishMan</p>
+                <div class="row">
+                    <div class="col">
+                        <h1 class="fw-bold text-dark mb-4" id="emailOpened">E-mail opened.<br><br></h1>
+                        <h5 class="text-dark" style="font-size: 12px;margin: -36px;" id="data">Click the button to analyze the e-mail.</h5>
+                    </div>
+                </div>
+                <footer class="text-center"></footer>
+            </div>
+        </div>
+        <footer class="text-center bg-dark"></footer>
+        <footer class="text-center"></footer>
+    </section>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center" id="buttonContainer"><button id="myButton" class="btn btn-primary" data-bss-hover-animate="pulse" type="button" style="width: 117.7344px;height: 45px;background: var(--bs-blue);font-weight: bold;text-shadow: 0px 0px;box-shadow: 0px 0px 10px var(--bs-blue);">Analyze</button></div>
+          </div>
+    </div>
+    <footer class="text-center"></footer>
+    <div class="col-md-12 offset-2 text-center" style="margin: 0px;padding: 0px;"><img src="assets/img/email.png" style="height: 57px;margin: 11px;padding: 0px;"></div>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/bs-init.js"></script>
+</body>
+
 </html>

@@ -1,4 +1,5 @@
 window.onload = function() {
+
   checkAuthToken()
       .then(token => {
           console.log('Token', token)
@@ -14,16 +15,17 @@ window.onload = function() {
             if (response.status === 'emailOpened') {
               window.location.href = '/templates/detection_main.html';
               console.log('popup.js: emailOpened received from background.js, redirecting to detection_main.html')
+              // chrome.runtime.sendMessage({ action: 'getEmailPrediction' }, (response) => {
+              //   console.log('popup.js: received prediction from background.js, redirecting..')
+              // });
             } else if (response.status === 'emailClosed') {
               window.location.href = '/templates/welcome.html';
               console.log('popup.js: emailClosed received from background.js, redirecting to welcome.html')
             }
           });
-          
       })
-      .catch(error => {
-          console.error("Error:", error);
-      });
+    console.log('popup.js: finished')
+
 };
 
 function redirectToWelcomePage() {

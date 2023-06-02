@@ -25,14 +25,23 @@ if (!isListenerActive) {
     } else if (message.action === 'callGmailApi') {
       if (currentEmailId) {
         console.log("background.js: callGmailApi received from detection_button.js, sending request to GmailAPI")
+        let dataFromSecondApiHolder = null;
         getEmailIdGmail(currentEmailId)
         .then(dataFromFirstReq => getModelPrediction(dataFromFirstReq))
-        .then(dataFromSecondApi => console.log(dataFromSecondApi))
+        .then(dataFromSecondApi => {
+          console.log(dataFromSecondApi);
+          dataFromSecondApiHolder = dataFromSecondApi
+          chrome.runtime.sendMessage({action: 'fetchedModelPrediction', predictionData: dataFromSecondApi});
+        })
         .catch(error => console.error(error));
       } else {
         console.log("background.js: callGmailApi received from detection_button.js but emailId is null, aborting")
       }
     }
+    // } else if (message.action === 'getEmailPrediction') {
+    //   console.log("background.js: getEmailPrediction received from popup.js, sending response")
+    //   sendResponse({status: dataFromSecondApi});
+    // }
   });
   isListenerActive = true;
 }
